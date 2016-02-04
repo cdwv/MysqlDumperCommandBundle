@@ -1,0 +1,23 @@
+imports:
+    - { resource: parameters.yml }
+
+parameters:
+    secret: ThisTokenIsNotSoSecretChangeIt
+
+framework:
+    test: ~
+    form:            ~
+    csrf_protection: ~
+    templating:
+        engines: ['twig']
+    session:
+        storage_id: session.storage.mock_file
+    secret: %secret%
+    router:          { resource: "%kernel.root_dir%/routing.yml" }
+    profiler:
+        collect: false
+
+doctrine:
+    dbal:
+        driver:   pdo_sqlite
+        path:     %kernel.cache_dir%/database.db

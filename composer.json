@@ -18,5 +18,11 @@
       "CodeWave\\MysqlDumperCommandBundle\\": ""
     }
   },
-  "minimum-stability": "dev"
+  "require-dev": {
+    "phpunit/phpunit": "~4.8",
+    "symfony/symfony": "~2.7",
+    "symfony/twig-bundle": "~2.7",
+    "doctrine/orm": "~2.3",
+    "doctrine/doctrine-bundle": "~1.3"
+  }
 }

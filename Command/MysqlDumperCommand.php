@@ -33,12 +33,15 @@ class MysqlDumperCommand extends ContainerAwareCommand
         if (!$path) {
             $path = '.';
         }
-        $fullPath = $path . '/' . $this->createFileName($databaseName);
+        $fileName = $this->createFileName($databaseName);
+        $fullPath = $path . '/' . $fileName;
 
         $command = 'mysqldump -u '. $databaseUser . ' -p' . $databasePassword . ' --port='.$databasePort . ' '. $databaseName . ' >> ' . $fullPath;
 
         $process = new Process($command);
         $process->run();
+
+        $output->write($fileName);
     }
 
     private function createFileName($databaseName)
