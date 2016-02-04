@@ -1,0 +1,22 @@
+{
+  "name": "cdwv/mysql-dumper-command-bundle",
+  "description": "Symfony command for create Mysql database backup",
+  "keywords": ["symfony", "mysql", "dump", "backup"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Karol Grochowalski",
+      "email": "karol.grochowalski@codewave.pl"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.2",
+    "symfony/symfony": "~2.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "CodeWave\\MysqlDumperCommandBundle\\": ""
+    }
+  },
+  "minimum-stability": "dev"
+}
