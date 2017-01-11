@@ -17,7 +17,7 @@ class MysqlDumpCommandBuilder implements DumpCommandBuilderInterface
     public function buildCommand(Connection $connection, $path)
     {
         if (!$path) {
-            $path = ' ';
+            $path = '.';
         }
 
         $fileName = $this->fileNameBuilder->buildName($connection->getDatabase());
