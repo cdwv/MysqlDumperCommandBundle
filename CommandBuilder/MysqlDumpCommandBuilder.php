@@ -26,7 +26,7 @@ class MysqlDumpCommandBuilder implements DumpCommandBuilderInterface
         $command = 'mysqldump ';
 
         if ( $connection->getUsername()) {
-            $command = $command .' -u=' . $connection->getUsername();
+            $command = $command .' -u ' . $connection->getUsername();
         }
 
         if ( $connection->getPort()) {
