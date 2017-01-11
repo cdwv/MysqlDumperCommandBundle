@@ -33,7 +33,7 @@ class MysqlDumperCommand extends ContainerAwareCommand
             $process = new Process($command);
             $process->run();
 
-            $output->writeln(explode(' >>  ', $command)[1]);
+            $output->writeln(explode('>>', $command)[1]);
         }
     }
 

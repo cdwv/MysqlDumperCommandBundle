@@ -27,7 +27,7 @@ class IntegrationTest extends  WebTestCase
     {
         $this->commandTester->execute(['command' => $this->command->getName()]);
         $this->fileName = $this->commandTester->getDisplay();
-        $this->fileName = str_replace(PHP_EOL, "", $this->fileName);
+        $this->fileName = trim(str_replace(PHP_EOL, "", $this->fileName));
         $this->assertFileExists($this->fileName);
     }
 
