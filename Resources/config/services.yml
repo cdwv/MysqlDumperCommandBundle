@@ -1,0 +1,8 @@
+services:
+    cdwv.mysql_dumper.file_name_builder:
+        class: CodeWave\MysqlDumperCommandBundle\FileSystem\FileNameBuilder
+
+    cdwv.mysql_dumper.mysql_dumper_command_builder:
+        class: CodeWave\MysqlDumperCommandBundle\CommandBuilder\MysqlDumpCommandBuilder
+        arguments:
+            - "@cdwv.mysql_dumper.file_name_builder"

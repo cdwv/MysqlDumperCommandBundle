@@ -24,29 +24,21 @@ class MysqlDumperCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $databasePassword = $this->getContainer()->getParameter('database_password');
-        $databaseUser = $this->getContainer()->getParameter('database_user');
-        $databaseName = $this->getContainer()->getParameter('database_name');
-        $databasePort = $this->getContainer()->getParameter('database_port');
+        $connections = $this->getDatabaseConnections();
+        $commandBuilder = $this->getContainer()->get('cdwv.mysql_dumper.mysql_dumper_command_builder');
 
-        $path = $input->getOption('path');
-        if (!$path) {
-            $path = '.';
+        foreach ($connections as $connection) {
+            $command = $commandBuilder->buildCommand($connection, $input->getOption('path'));
+
+            $process = new Process($command);
+            $process->run();
+
+            $output->write(explode(' >>  ', $command)[1]);
         }
-        $fileName = $this->createFileName($databaseName);
-        $fullPath = $path . '/' . $fileName;
-
-        $command = 'mysqldump -u '. $databaseUser . ' -p' . $databasePassword . ' --port='.$databasePort . ' '. $databaseName . ' >> ' . $fullPath;
-
-        $process = new Process($command);
-        $process->run();
-
-        $output->write($fileName);
     }
 
-    private function createFileName($databaseName)
+    private function getDatabaseConnections()
     {
-        $date = new \DateTime();
-        return  $databaseName . '_' . $date->format('d-m-Y_h-i') . '_dump.sql';
+        return $this->getContainer()->get('doctrine')->getConnections();
     }
 }

@@ -9,4 +9,4 @@ before_install:
   - composer install
 
 script:
-- ./vendor/bin/phpunit --configuration phpunit.xml.dist --testsuite integration
+- ./vendor/bin/phpunit --configuration phpunit.xml.dist
