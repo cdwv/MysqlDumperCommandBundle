@@ -25,22 +25,22 @@ class MysqlDumpCommandBuilder implements DumpCommandBuilderInterface
 
         $command = 'mysqldump ';
 
-        if ( $connection->getUsername()) {
-            $command = $command .' -u ' . $connection->getUsername();
+        if ($connection->getUsername()) {
+            $command = $command . ' -u ' . $connection->getUsername();
         }
 
-        if ( $connection->getPort()) {
-            $command = $command .' --port=' . $connection->getPort();
+        if ($connection->getPort()) {
+            $command = $command . ' --port=' . $connection->getPort();
         }
 
         if (!$connection->getDatabase()) {
             throw new \RuntimeException('No database!');
         }
 
-        $command = $command.   ' ' . $connection->getDatabase();
+        $command = $command . ' --single-transaction ' . $connection->getDatabase();
 
         if ($connection->getPassword()) {
-            $command = $command .  ' -p' . $connection->getPassword() ;
+            $command = $command . ' -p' . $connection->getPassword();
         }
 
         $command = $command . ' >> ' . $fullPath;

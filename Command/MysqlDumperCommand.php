@@ -31,7 +31,11 @@ class MysqlDumperCommand extends ContainerAwareCommand
             $command = $commandBuilder->buildCommand($connection, $input->getOption('path'));
 
             $process = new Process($command);
-            $process->run();
+            $status = $process->run();
+
+            if ($status == 2) {
+                $output->writeln('Dump failed: '. explode('>>', $command)[1]);
+            }
 
             $output->writeln(explode('>>', $command)[1]);
         }
