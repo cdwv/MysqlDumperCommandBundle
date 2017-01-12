@@ -37,6 +37,10 @@ class MysqlDumpCommandBuilder implements DumpCommandBuilderInterface
             throw new \RuntimeException('No database!');
         }
 
+        if ($connection->getHost()) {
+            $command = $command . ' -h ' . $connection->getHost();
+        }
+
         $command = $command . ' --single-transaction ' . $connection->getDatabase();
 
         if ($connection->getPassword()) {
