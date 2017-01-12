@@ -47,7 +47,7 @@ class MysqlDumpCommandBuilder implements DumpCommandBuilderInterface
             $command = $command . ' -p' . $connection->getPassword();
         }
 
-        $command = $command . ' >> ' . $fullPath;
+        $command = $command . '| bzip2 >> ' . $fullPath . '.bz2';
 
         return $command;
     }
