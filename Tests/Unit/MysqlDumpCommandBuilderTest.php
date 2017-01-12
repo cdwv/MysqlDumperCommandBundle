@@ -28,7 +28,7 @@ class MysqlDumpCommandBuilderTest extends \PHPUnit_Framework_TestCase
         $cmd = $this->commandBuilder->buildCommand($this->getConnectionMock(), self::DUMP_PATH);
 
         $this->assertStringStartsWith('mysqldump', $cmd);
-        $this->assertStringEndsWith(self::DATABASE_DUMP_FILE, $cmd);
+        $this->assertStringEndsWith(self::DATABASE_DUMP_FILE . '.bz2', $cmd);
     }
 
     /**
