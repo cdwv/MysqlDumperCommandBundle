@@ -22,3 +22,6 @@ Run:
 ```
     app/console cdwv:database:dump
 ```
+
+## License
+The MIT License &copy; 2015 - 2016
