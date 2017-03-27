@@ -2,7 +2,13 @@ services:
     cdwv.mysql_dumper.file_name_builder:
         class: CodeWave\MysqlDumperCommandBundle\FileSystem\FileNameBuilder
 
-    cdwv.mysql_dumper.mysql_dumper_command_builder:
+    cdwv.mysql_dumper.dumper_command_builder.postgresql:
+        class: CodeWave\MysqlDumperCommandBundle\CommandBuilder\PgsqlDumpCommandBuilder
+        arguments:
+            - "@cdwv.mysql_dumper.file_name_builder"
+
+    cdwv.mysql_dumper.dumper_command_builder.mysql:
         class: CodeWave\MysqlDumperCommandBundle\CommandBuilder\MysqlDumpCommandBuilder
         arguments:
             - "@cdwv.mysql_dumper.file_name_builder"
+
