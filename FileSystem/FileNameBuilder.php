@@ -7,6 +7,9 @@ class FileNameBuilder implements FileNameBuilderInterface
     /** @var \DateTime */
     private $dateTime;
 
+    /** @var string */
+    private $dateFormat = 'd-m-Y_h-i';
+
     public function __construct(\DateTime $dateTime = null)
     {
         if ($dateTime) {
@@ -18,6 +21,6 @@ class FileNameBuilder implements FileNameBuilderInterface
 
     public function buildName($databaseName)
     {
-        return $databaseName . '_' . $this->dateTime->format('d-m-Y_h-i') . '_dump.sql';
+        return sprintf("%s_%s_dump.sql", $databaseName, $this->dateTime->format($this->dateFormat));
     }
 }
