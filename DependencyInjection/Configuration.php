@@ -18,7 +18,17 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('code_wave_mysql_dumper_command');
+        $rootNode = $treeBuilder
+            ->root('code_wave_mysql_dumper_command')
+            ->children()
+                ->scalarNode('date_template')
+                    ->defaultValue('d-m-Y_h-i')
+                ->end()
+                ->scalarNode('base_directory')
+                    ->defaultValue('.')
+                ->end()
+            ->end()
+            ;
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for

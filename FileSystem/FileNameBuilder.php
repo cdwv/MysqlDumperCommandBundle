@@ -8,10 +8,14 @@ class FileNameBuilder implements FileNameBuilderInterface
     private $dateTime;
 
     /** @var string */
-    private $dateFormat = 'd-m-Y_h-i';
+    private $dateFormat;
 
-    public function __construct(\DateTime $dateTime = null)
+    public function __construct($dateFormat, \DateTime $dateTime = null)
     {
+        if($dateFormat) {
+          $this->dateFormat = $dateFormat;
+        }
+
         if ($dateTime) {
             $this->dateTime = $dateTime;
         } else {

@@ -26,10 +26,16 @@ class MysqlDumperCommand extends ContainerAwareCommand
     {
         $connections = $this->getDatabaseConnections();
 
+        $basePath = $this->getBasePath($input);
+
+        $output->writeln('Database dump output directory: ' . $basePath);
+
         foreach ($connections as $connection) {
             $commandBuilder = $this->getCommandBuilder($connection);
 
-            $command = $commandBuilder->buildCommand($connection, $input->getOption('path'));
+            $command = $commandBuilder->buildCommand($connection, $basePath);
+
+            $output->writeln('Creating dump of database ' . $connection->getDatabase());
 
             $process = new Process($command);
 
@@ -43,6 +49,17 @@ class MysqlDumperCommand extends ContainerAwareCommand
 
             $output->writeln(explode('>>', $command)[1]);
         }
+    }
+
+    private function getBasePath($input)
+    {
+        if($input->getOption('path')) {
+          return $input->getOption('path');
+        }
+
+        return $this
+            ->getContainer()
+            ->getParameter('code_wave_mysql_dumper_command.base_directory');
     }
 
     private function getDatabaseConnections()

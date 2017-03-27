@@ -22,6 +22,9 @@ class CodeWaveMysqlDumperCommandExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('code_wave_mysql_dumper_command.date_template', $config['date_template']);
+        $container->setParameter('code_wave_mysql_dumper_command.base_directory', $config['base_directory']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
