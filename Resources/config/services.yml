@@ -8,9 +8,13 @@ services:
         class: CodeWave\MysqlDumperCommandBundle\CommandBuilder\PgsqlDumpCommandBuilder
         arguments:
             - "@cdwv.mysql_dumper.file_name_builder"
+            - "%code_wave_mysql_dumper_command.compression_engine%"
+            - "%code_wave_mysql_dumper_command.compression_level%"
 
     cdwv.mysql_dumper.dumper_command_builder.mysql:
         class: CodeWave\MysqlDumperCommandBundle\CommandBuilder\MysqlDumpCommandBuilder
         arguments:
             - "@cdwv.mysql_dumper.file_name_builder"
+            - "%code_wave_mysql_dumper_command.compression_engine%"
+            - "%code_wave_mysql_dumper_command.compression_level%"
 

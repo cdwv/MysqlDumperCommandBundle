@@ -30,6 +30,8 @@ Configuration:
 code_wave_mysql_dumper_command:
     date_template: 'Y-m-d_H:i:s'
     base_directory: '%kernel.root_dir%/../database_dump'
+    compression_engine: gzip
+    compression_level: 1
 ```
 
 Defaults:
@@ -39,6 +41,8 @@ Defaults:
 code_wave_mysql_dumper_command:
     date_template: 'd-m-Y_h-i'
     base_directory: '.'
+    compression_engine: bzip2 # available: gzip, bzip2, xz, none
+    compression_level: 9
 ```
 
 

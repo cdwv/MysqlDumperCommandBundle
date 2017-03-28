@@ -3,17 +3,9 @@
 namespace CodeWave\MysqlDumperCommandBundle\CommandBuilder;
 
 use Doctrine\DBAL\Connection;
-use CodeWave\MysqlDumperCommandBundle\FileSystem\FileNameBuilderInterface;
 
-class MysqlDumpCommandBuilder implements DumpCommandBuilderInterface
+class MysqlDumpCommandBuilder extends DumpCommandBuilder
 {
-    private $fileNameBuilder;
-
-    public function __construct(FileNameBuilderInterface $fileNameBuilder)
-    {
-        $this->fileNameBuilder = $fileNameBuilder;
-    }
-
     public function buildCommand(Connection $connection, $path)
     {
         if (!$path) {
@@ -47,7 +39,11 @@ class MysqlDumpCommandBuilder implements DumpCommandBuilderInterface
             $command = $command . ' -p' . $connection->getPassword();
         }
 
-        $command = $command . ' | bzip2 >> ' . $fullPath . '.bz2';
+        $command .= $this->getCompressionCommand();
+
+        $command .= ' > ' . $fullPath;
+
+        $command .= $this->getCompressionExtension();
 
         return $command;
     }

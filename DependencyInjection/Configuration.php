@@ -27,6 +27,12 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('base_directory')
                     ->defaultValue('.')
                 ->end()
+                ->enumNode('compression_engine')
+                    ->values(['gzip', 'bzip2', 'xz', 'none'])
+                    ->defaultValue('bzip2')
+                ->end()
+                ->integerNode('compression_level')
+                ->end()
             ->end()
             ;
 

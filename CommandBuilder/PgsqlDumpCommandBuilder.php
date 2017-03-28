@@ -3,54 +3,42 @@
 namespace CodeWave\MysqlDumperCommandBundle\CommandBuilder;
 
 use Doctrine\DBAL\Connection;
-use CodeWave\MysqlDumperCommandBundle\FileSystem\FileNameBuilderInterface;
 
-class PgsqlDumpCommandBuilder implements DumpCommandBuilderInterface
+class PgsqlDumpCommandBuilder extends DumpCommandBuilder
 {
-    private $fileNameBuilder;
-
-    public function __construct(FileNameBuilderInterface $fileNameBuilder)
-    {
-        $this->fileNameBuilder = $fileNameBuilder;
-    }
-
     public function buildCommand(Connection $connection, $path)
     {
         if (!$connection->getDatabase()) {
             throw new \RuntimeException('No database!');
         }
 
-        if (!$path) {
-            $path = '.';
-        }
-
         $fileName = $this->fileNameBuilder->buildName($connection->getDatabase());
-        $fullPath = $path . '/' . $fileName;
 
-        $command = 'pg_dump';
+        $fullPath = sprintf('%s/%s', $path, $fileName);
 
-        if ($connection->getUsername()) {
-            $command .= ' -U ' . $connection->getUsername();
-        }
+        $userNamePart = $connection->getUsername() ? sprintf('-U %s', $connection->getUsername()) : '';
 
-        if ($connection->getPort()) {
-            $command .= ' -p=' . $connection->getPort();
-        }
+        $portPart = $connection->getPort() ? sprintf('-p=%s', $connection->getPort()) : '';
 
+        $hostPart = $connection->getHost() ? sprintf('-h %s', $connection->getHost()) : '';
 
-        if ($connection->getHost()) {
-            $command .= ' -h ' . $connection->getHost();
-        }
+        $databasePart = sprintf('-d %s', $connection->getDatabase());
 
-        $command .= ' -d ' . $connection->getDatabase();
+        $environmentPart = $connection->getPassword() ? sprintf('PGPASSWORD="%s"',
+            $connection->getPassword()) : '';
 
-        $command .= ' -v ';
+        $command = sprintf('%s pg_dump -v %s %s %s %s',
+          $environmentPart,
+          $userNamePart,
+          $portPart,
+          $hostPart,
+          $databasePart);
 
-        if ($connection->getPassword()) {
-            $command = 'PGPASSWORD="' . $connection->getPassword() . '" ' . $command;
-        }
+        $command .= $this->getCompressionCommand();
 
-        $command .= ' | bzip2 >> ' . $fullPath . '.bz2';
+        $command .= ' > ' . $fullPath;
+
+        $command .= $this->getCompressionExtension();
 
         return $command;
     }
