@@ -2,7 +2,9 @@
 
 Description
 ------------
-Simple Symfony task for create backup/dump mysql database
+Simple Symfony task for create backup/dump database. 
+
+Currently works only with MySQL and PostgreSQL.
 
 Installation
 ------------
